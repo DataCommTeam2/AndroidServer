@@ -34,10 +34,10 @@ class Welcome extends Application {
                             <tr>
                                 <div class="btn-group btn-group-justified" role="group" aria-label="...">
                                     <div class="btn-group" role="group">
-                                        <button type="submit" value="Submit" class="btn btn-default">Login</button>
+                                        <button type="submit" name="Submit" value="Submit" class="btn btn-default">Login</button>
                                     </div>
                                     <div class="btn-group" role="group">
-                                        <button type="submit" value="Register" class="btn btn-default">Register</button>
+                                        <button type="submit" name="Submit" value="Register" class="btn btn-default">Register</button>
                                     </div>
                                 </div>
                             </tr>

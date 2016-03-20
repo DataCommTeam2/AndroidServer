@@ -28,6 +28,7 @@ class Application extends CI_Controller {
         $this->data = array();
         $this->data['pagetitle'] = "GPS Tracker";
         $this->data['pageheader'] = '';//"GPS Tracker";
+        $this->data['loadScript'] = '';
     }
 
     /**
