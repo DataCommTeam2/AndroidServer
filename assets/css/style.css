@@ -178,12 +178,21 @@ li {
     margin-top: 7px;
     margin-bottom: 7px;
 }
-
-.home-login, #home-nav-page {
-    text-align: center;
-    width: 50%;
-  margin:auto;
-  display:block;
+@media (max-width: 767px) {
+    .home-login, #home-nav-page {
+        text-align: center;
+        width: 98%;
+      margin:auto;
+      display:block;
+    }
+}
+@media (min-width: 768px) {
+    .home-login, #home-nav-page {
+        text-align: center;
+        width: 50%;
+      margin:auto;
+      display:block;
+    }
 }
 
 .home-login tr {

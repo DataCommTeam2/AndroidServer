@@ -167,7 +167,7 @@ class Application extends CI_Controller {
     function createTableColumns($columnNames) {
         $result = '<tr>';
         foreach($columnNames as $column) {
-            $result .= '<td><h3>'.$column.'</h3></td>';
+            $result .= '<td><h3 class="hidden-xs hidden-sm">'.$column.'</h3><h4 class="hidden-md hidden-lg">'.$column.'</h4></td>';
         }
         $result .= '</tr>';
         return $result;
