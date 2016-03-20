@@ -26,8 +26,8 @@ class Application extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->data = array();
-        $this->data['pagetitle'] = "StockWatch";
-        $this->data['pageheader'] = "StockWatch";
+        $this->data['pagetitle'] = "GPS Tracker";
+        $this->data['pageheader'] = '';//"GPS Tracker";
     }
 
     /**
@@ -82,31 +82,46 @@ class Application extends CI_Controller {
             return $res;
     }
     
-    //To be removed and replaced with below version.
     protected function createNavigation($page) {
         $counter = 1;
+        
         $result = '<div id="loginDiv">';
         if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');
-            $result .= '<form id="loginForm" method="post" action="/login">
-                Logged in as '.$session_data['username'].'<br>
-                <input type="submit" value="Loggout">
+            //$this->data['loginForm'] = '<p class="navbar-text">Welcome, '.$session_data['username'].'!</p>';
+
+            $this->data['loginForm'] = '<form class="navbar-form navbar-left" role="search" id="loginForm" method="post"action="/login">
+                <div class="navbar-text" id="minimal-nav-text">Welcome, ' . $session_data['username'] . '!</div>
+                <button type="submit" value="Submit" class="btn btn-default">Log Out</button>
             </form>';  
+
+            if ($page === 1) {
+                $this->data['navLinks'] = '<li class="active"><a href="/">Homepage</a></li>
+                <li><a href="/history">History</a></li>
+                <li><a href="/map">Map</a></li>';
+            } else if ($page === 2) {
+                $this->data['navLinks'] = '<li><a href="/">Homepage</a></li>
+                <li class="active"><a href="/history">History</a></li>
+                <li><a href="/map">Map</a></li>';
+            } else if ($page === 3) {
+                $this->data['navLinks'] = '<li><a href="/">Homepage</a></li>
+                <li><a href="/history">History</a></li>
+                <li class="active"><a href="/map">Map</a></li>';
+            }
         } else {
-            $result .= '<form id="loginForm" method="post"action="/login">
-                Username:<br>
-                <input type="text" name="username"><br>
-                Password:<br>
-                <input type="password" name="password"><br>
-                <input type="submit" value="Submit">
-            </form>';
+            $this->data['loginForm'] = '
+                    <form class="navbar-form navbar-left" role="search" id="loginForm" method="post"action="/login">
+                        <div class="form-group">
+                            <input type="text" name="username" class="form-control" placeholder="Username">
+                            <input type="password" name="password" class="form-control" placeholder="Password">
+                        </div>
+                        <button type="submit" name="Submit" value="Submit" class="btn btn-default">Login</button>
+                        <button type="submit" name="Submit" value="Register" class="btn btn-default">Register</button>
+                  </form>';
+       $this->data['navLinks'] = '<div class="navbar-text">Please login or register to browse the website.</div>';
         }
        $result .= '</div><div id="pageSelection"><ul>';
         
-        $result .= '
-                <li><a href="/">Homepage</a></li>
-                <li><a href="/history">History</a></li>
-                <li><a href="/map">Map</a></li>';
                 
         $result .= '</ul></div>';
         

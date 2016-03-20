@@ -67,5 +67,27 @@ class Users extends MY_Model {
             return false;
         }
     }
+    
+    function queryUsername($username) {
+        $this->db->select('username');
+        $this->db->from('users');
+        $this->db->where('username', $username);
+        
+        $result = $this-> db ->get();
+        
+        if($result -> num_rows() == 1){
+            return $result->result();
+        }
+        else{
+            return false;
+        }
+    }
+    
+    function createAccount($username, $password) {
+        $ins = array('username' => $username, 
+            'password' => $password, 
+            'deviceid' => '');
+        $this->db->insert('users', $ins);
+    }
 
 }

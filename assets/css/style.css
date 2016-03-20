@@ -1,4 +1,4 @@
-body{
+/*body{
     background-color:#6F7C7F;
     color:#333333;
     font-family:Calibri;
@@ -167,4 +167,38 @@ tr:nth-child(even) {
 
 li {
     color:white;
+}
+*/
+
+#header {
+    text-align: center;
+}
+
+#minimal-nav-text {
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
+
+.home-login, #home-nav-page {
+    text-align: center;
+    width: 50%;
+  margin:auto;
+  display:block;
+}
+
+.home-login tr {
+    margin: 5px;
+}
+
+#body {
+    margin: 20px;
+    margin-top: 70px;
+}
+
+#oneTable {
+    width: 100%;
+}
+
+#oneTable td {
+    text-align: center;
 }

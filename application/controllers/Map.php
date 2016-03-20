@@ -14,7 +14,7 @@ class Map extends Application {
             //$realName = ($name === NULL) ? $this->movement->getMostRecentCodeMovement() : $name;
             //$stockItemNames = 
             $this->data['pagebody'] = 'map';//new DBQuery().getDatabaseData();//'index';
-            $this->data['navigation'] = $this->createNavigation(2);
+            $this->data['navigation'] = $this->createNavigation(3);
             //$this->data['dropdowndata'] = $this->createDropDown($this->stocks->getStocksList(), $realName);
             
             //$this->load->library('googlemaps');
@@ -37,10 +37,20 @@ class Map extends Application {
             }
             
             $this->googlemaps->add_polyline($polyline);
+            //$this->googlemaps->map_height = 600;
             $result = $this->googlemaps->create_map();
+            
             
             $this->data['javascript'] = $result['js'];
             $this->data['map'] = $result['html'];
+            
+            $this->data['loadScript'] = 'function resizeMap() {'
+                    . '    document.getElementById("map_canvas").style.height = (window.innerHeight - (90)) + "px";'
+                    . '};'
+                    . 'window.onresize = function(event) {'
+                    . '    resizeMap();'
+                    . '};'
+                    . 'window.onload = resizeMap;';
 
             //$this->load->view('_template', $this->data);
             
