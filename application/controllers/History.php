@@ -7,26 +7,35 @@ class History extends Application {
 	 */
 	public function index()
 	{ 
+            if (!isset($this->session->userdata['logged_in'])) {
+                redirect('/', 'refresh');
+            }
             $whoIs = $this->session->userdata['logged_in']['username'];
             if ($whoIs === NULL) {
                 redirect('/', 'refresh');
             }
-            //$realName = ($name === NULL) ? $this->movement->getMostRecentCodeMovement() : $name;
-            //$stockItemNames = 
-            $this->data['pagebody'] = 'onetablepage';//new DBQuery().getDatabaseData();//'index';
+            
+            
+            $this->data['pageheader'] = '<div class="jumbotron">
+                <h1>' . $whoIs . "'s GPS Data </h1>";
+            if ($this->session->userdata('logged_in')) {
+                $this->data['pageheader'] .= '';
+                        
+                       /* '<p>...</p>
+                <p><a class="btn btn-primary btn-lg" href="#" role="button">GPS History</a>
+                <a class="btn btn-primary btn-lg" href="#" role="button">Map</a></p>';*/
+            } else {
+                $this->data['pageheader'] .= '<p>Please login to view GPS data</p>';
+            }
+            $this->data['pageheader'] .= '</div>';
+            
+            
             $this->data['navigation'] = $this->createNavigation(2);
-            //$this->data['dropdowndata'] = $this->createDropDown($this->stocks->getStocksList(), $realName);
             
+            $this->data['pagebody'] = 'onetablepage';
             
-            
-            //$fullName = $this->stocks->getStockByCode($username);
-            $this->data['contentTitle'] = $whoIs . "'s GPS Data";//$fullName[0] . ' [' . $fullName[1] . '] = $' . $this->stocks->getStockPrice($realName);
-            
-            $this->data['oneTableColumns'] = $this->createTableColumns(['datetime', 'latitude', 'longitude']);
+            $this->data['oneTableColumns'] = $this->createTableColumns(['Date', 'Latitude', 'Longitude']);
             $this->data['oneTableQuery'] = $this->parseQuery($this->positions->getAllPlots($whoIs));
-            
-            //$this->data['rightTableColumns'] = $this->createTableColumns(['Player', 'Amount', 'Type', 'Timestamp']);
-            //$this->data['rightTableQuery'] = $this->parseQueryClickable($this->transaction->getTransactionByCode($realName), 'profile', 1);
             
             $this->render();
 	}

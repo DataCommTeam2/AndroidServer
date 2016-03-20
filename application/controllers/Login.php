@@ -13,10 +13,14 @@ class Login extends Application {
     }
     
     public function loginAttempt() {
-
-        if (isset($_POST['username']) && isset($_POST['password'])) {
-            if(!$this->setNavBarLogin($_POST['username'],$_POST['password'])) {
-                echo '<script>alert("Invalid username and password combination.")</script>';
+        if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['Submit'])) {
+            if ($_POST['Submit'] === "Submit") {
+                if(!$this->setNavBarLogin($_POST['username'],$_POST['password'])) {
+                    echo '<script>alert("Invalid username and password combination.")</script>';
+                    redirect('/', 'refresh');
+                }
+            } else if ($_POST['Submit'] === "Register") {
+                echo '<script>alert("' . $this->attemptRegistration($_POST['username'],$_POST['password']) . '");</script>';
                 redirect('/', 'refresh');
             }
         } else {
@@ -24,7 +28,16 @@ class Login extends Application {
         }
     }
     
-
+    public function attemptRegistration($username, $password) {
+        if ($this->users->queryUsername($username)) {
+                return "This account already exists!";
+        }
+        if (strlen($username) > 0 && strlen($password) > 0) {
+            $this->users->createAccount($username, $password);
+            return "Account created! Please login.";
+        }
+        return "Error registering";
+    }
         
     public function setNavBarLogin($username,$password){
         $result = $this->users->queryLogin($username,$password);
