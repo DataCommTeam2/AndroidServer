@@ -2,9 +2,27 @@
 
 class History extends Application {
 
-	/**
-	 * Index Page for this controller.
-	 */
+        /*------------------------------------------------------------------------------------------------------------------
+        --      FUNCTION:                       index
+        --
+        --      DATE:                           March 20th, 2016
+        --
+        --      REVISIONS:                      NONE
+        --
+        --      DESIGNER:                       Jaegar Sarauer
+        --
+        --      PROGRAMMER:                     Jaegar Sarauer
+        --
+        --      INTERFACE:                      void index()
+        --
+        --      RETURNS:                        void
+        --
+        --      NOTES:
+        --      This function instantiates the view of the web page for the History page. It detects if the user is logged in,
+        --      If the user isn;t they are pushed to the welcome page and asked to login before attempting to view any data.
+        --      If the user is logged on, it will load all GPS data for the user into a table for them to read the coordinates
+        --      and times of which the coordinates are recorded by.
+        ----------------------------------------------------------------------------------------------------------------------*/
 	public function index()
 	{ 
             if (!isset($this->session->userdata['logged_in'])) {

@@ -1,10 +1,5 @@
 <?php
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 class MapModel extends MY_Model {
     
@@ -12,7 +7,26 @@ class MapModel extends MY_Model {
         parent::__construct('positions','username');
     }
     
-    
+        /*------------------------------------------------------------------------------------------------------------------
+    --      FUNCTION:                       getCenter
+    --
+    --      DATE:                           March 20th, 2016
+    --
+    --      REVISIONS:                      NONE
+    --
+    --      DESIGNER:                       Jaegar Sarauer
+    --
+    --      PROGRAMMER:                     Jaegar Sarauer
+    --
+    --      INTERFACE:                      array int(2) getCenter($points)
+    --                                          int $points = An array of points.
+    --
+    --      RETURNS:                        the x and y of the average center of the array of points.
+    --
+    --      NOTES:
+    --      This function is intended to find the center of all collected points from within an array in order to show the
+    --      map correctly with all points visible.
+    ----------------------------------------------------------------------------------------------------------------------*/
     function getCenter($points) {
         $latAvg = 0;
         $longAvg = 0;

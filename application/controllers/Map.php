@@ -2,9 +2,30 @@
 
 class Map extends Application {
 
-	/**
-	 * Index Page for this controller.
-	 */
+        /*------------------------------------------------------------------------------------------------------------------
+        --      FUNCTION:                       index
+        --
+        --      DATE:                           March 20th, 2016
+        --
+        --      REVISIONS:                      NONE
+        --
+        --      DESIGNER:                       Jaegar Sarauer
+        --
+        --      PROGRAMMER:                     Jaegar Sarauer
+        --
+        --      INTERFACE:                      void index()
+        --
+        --      RETURNS:                        void
+        --
+        --      NOTES:
+        --      This function creates a google map for the user who is currently logged in and plots the points of their GPS data
+        --      to a map. The points are then connected.
+        --      If the user isn't logged in, the user will be pushed to the welcome screen.
+        --      If the user has no GPS data, the map will be replaced with a message telling the user to use the app before
+        --      attempting to view the map and the GPS data on it.
+        --      Along with the map, an auto resizing script is added to the page to automatically size the map based on the size
+        --      of the web page.
+        ----------------------------------------------------------------------------------------------------------------------*/
 	public function index()
 	{ 
             $whoIs = $this->session->userdata['logged_in']['username'];
@@ -58,18 +79,7 @@ class Map extends Application {
             } else {
                 $this->data['pagebody'] = 'textpage';
                 $this->data['innerContent'] = "<h2>Oops!</h2><p>Looks like you have no data to show. Try using our app before looking up the places you haven't visisted!";
-            }
-            //$this->load->view('_template', $this->data);
-            
-            //$fullName = $this->stocks->getStockByCode($username);
-            //$this->data['contentTitle'] = $whoIs . "'s GPS Data";//$fullName[0] . ' [' . $fullName[1] . '] = $' . $this->stocks->getStockPrice($realName);
-            
-            //$this->data['oneTableColumns'] = $this->createTableColumns(['datetime', 'latitude', 'longitude']);
-            //$this->data['oneTableQuery'] = $this->parseQuery($this->positions->getAllPlots($whoIs));
-            
-            //$this->data['rightTableColumns'] = $this->createTableColumns(['Player', 'Amount', 'Type', 'Timestamp']);
-            //$this->data['rightTableQuery'] = $this->parseQueryClickable($this->transaction->getTransactionByCode($realName), 'profile', 1);
-            
+            }            
             $this->render();
 	}
 }

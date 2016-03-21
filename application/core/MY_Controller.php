@@ -42,6 +42,12 @@ class Application extends CI_Controller {
         $this->parser->parse('_template', $this->data);
     }
     
+    /**
+     * Parses a query into table data.
+     * @param type $queryData   = The data to parse
+     * @param type $ignoreIndex = A single index to ignore if some data shouldn't be shown.
+     * @return string
+     */
     function parseQuery($queryData, $ignoreIndex = -1) {
             $res = '';
             
@@ -60,29 +66,30 @@ class Application extends CI_Controller {
             }
             return $res;
     }
-    
-        function parseQueryClickable($queryData, $linkto, $IgnoreIndex = 0) {
-            $res = '';
-            
-            if ($queryData == NULL) {
-                return '';
-            }
-            
-            foreach($queryData as $queryIndex) {
-                $res .= '<tr>';
-                for ($index = $IgnoreIndex; $index < count($queryIndex); $index++) {
-                    $res .= '<td>';
-                    if ($index === $IgnoreIndex) {
-                        $res .= '<a id="clickable" href="/'. $linkto. '/' . $queryIndex[0] . '">' . $queryIndex[$index] . '</a>';
-                    } else {
-                        $res .= $queryIndex[$index];
-                    }
-                    $res .= '</td>';
-                }
-            }
-            return $res;
-    }
-    
+
+    /*------------------------------------------------------------------------------------------------------------------
+    --      FUNCTION:                       createNavigation
+    --
+    --      DATE:                           March 20th, 2016
+    --
+    --      REVISIONS:                      NONE
+    --
+    --      DESIGNER:                       Jaegar Sarauer
+    --
+    --      PROGRAMMER:                     Jaegar Sarauer
+    --
+    --      INTERFACE:                      string createNavigation($page)
+    --                                          int $page = The index of the page the user's on.
+    --
+    --      RETURNS:                        string THE HTML built from the function
+    --
+    --      NOTES:
+    --      This function sets up the navigation bar depending if the user has logged in or not. If the 
+    --      user has logged in, it will display the pages available, with indication on which page the user is on.
+    --      Along with the pages, it will also show the logout button, and who is currently logged in.
+    --      If the user is logged out, a message asking the user to login is shown instead of naviagation links, with
+    --      the ability to login or register in the naviagation bar.
+    ----------------------------------------------------------------------------------------------------------------------*/
     protected function createNavigation($page) {
         $counter = 1;
         
@@ -128,42 +135,30 @@ class Application extends CI_Controller {
         
         return $result;
     }
+
     
-    //Unfinished attempt at dynamically generating navigation & selected.
-    /*protected function createNavigation($name) {
-        $result = '';
-        $counter = 1;
-        
-        foreach($this->choices as $choice) {
-            $result .= '<li';
-            if ($page == $counter++) {
-                $result .= ' id=currentpage';
-            }
-            $result .= '><a hreh=\"' . $choice-> . ">" . "Homepage" . "</a></li>";
-        }
-        
-        return $result;
-    }*/
-    
-    function createDropDown($dropdowndata = null, $pagename = null) {
-        $URI = "$_SERVER[REQUEST_URI]";
-        if (strlen($URI) > 1) {
-            $arr = explode('/', $URI);
-            $URI = $arr[0].'/'.$arr[1];
-        }
-        $URI.='/';
-        $result = '<select onchange="window.location=\''."http://$_SERVER[HTTP_HOST]$URI".'\' + this.value;">';
-        foreach($dropdowndata as $item) {
-            $result .= '<option value="'.$item[0].'"';
-            if ($item[0]==$pagename) {
-                $result .= ' selected="selected"';
-            }
-            $result .= '>'.$item[1] . ' [' . $item[0] . ']' . '</option>';
-        }
-        $result .= '</select>';
-        return $result;
-    }
-    
+
+    /*------------------------------------------------------------------------------------------------------------------
+    --      FUNCTION:                       createTableColumns
+    --
+    --      DATE:                           March 20th, 2016
+    --
+    --      REVISIONS:                      NONE
+    --
+    --      DESIGNER:                       Jaegar Sarauer
+    --
+    --      PROGRAMMER:                     Jaegar Sarauer
+    --
+    --      INTERFACE:                      string createTableColumns($columnNames)
+    --                                          int $columnNames = The names of the columns.
+    --
+    --      RETURNS:                        string THE HTML
+    --
+    --      NOTES:
+    --      This function creates several columns, the number of columns depends on the amount of names passed in. 
+    --      The column names are returned in html, depending on if the user is on mobile or not. If the user is on mobile,
+    --      the columns appear smaller than on the desktop site.
+    ----------------------------------------------------------------------------------------------------------------------*/
     function createTableColumns($columnNames) {
         $result = '<tr>';
         foreach($columnNames as $column) {
