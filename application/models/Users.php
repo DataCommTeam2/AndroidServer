@@ -13,45 +13,29 @@ class Users extends MY_Model {
         parent::__construct('users','username');
     }
     
-    function calcEquity($username) {
-        $res = $this->playerstocks->getPlayerStocks($username);
-        $total = 0;
-        if ($res == NULL)
-            return 0;
-        foreach($res as $queryIndex) {
-            $total += ((int)$queryIndex[1] * (int)$this->stocks->getStockByCode($queryIndex[0])[2]);
-        }
-        return $total;
-    }
-    
-    function getPlayers() {
-        $res = $this->all();
-        $newRes = array();
-        foreach($res as $queryIndex) {
-            $tmpRes = array();
-            array_push($tmpRes, $queryIndex->username, $queryIndex->firstname . ' ' . $queryIndex->lastname, $this->calcEquity($queryIndex->username), $queryIndex->cash);
-            array_push($newRes, $tmpRes);
-        }
-        return $newRes;
-    }
-    
-    function getPlayersNames() {
-        $res = $this->all();
-        $newRes = array();
-        foreach($res as $queryIndex) {
-            $tmpRes = array();
-            array_push($tmpRes, $queryIndex->username, $queryIndex->firstname . ' ' . $queryIndex->lastname);
-            array_push($newRes, $tmpRes);
-        }
-        return $newRes;
-    }
-    
-    function getPlayerNamesByUsername($username) {
-        $res = $this->some('username', $username);
-        $retName = array($res[0]->firstname, $res[0]->lastname);
-        return $retName;
-    }
-    
+    /*------------------------------------------------------------------------------------------------------------------
+    --      FUNCTION:                       queryLogin
+    --
+    --      DATE:                           March 20th, 2016
+    --
+    --      REVISIONS:                      NONE
+    --
+    --      DESIGNER:                       Jaegar Sarauer
+    --
+    --      PROGRAMMER:                     Jaegar Sarauer
+    --
+    --      INTERFACE:                      boolean queryLogin($username, $password)
+    --                                          string $username = The username to look up in the database.
+    --                                          string $password = The password to look up in the database.
+    --
+    --      RETURNS:                        boolean = Does the user and password match a key in the database.
+    --
+    --      NOTES:
+    --      This function checks the database for a username and password, and returns if there was a match for both fields
+    --      which make up one key.
+    --      If the username and password match an entry in the database, the function will return true. If no key is found,
+    --      if will return false.
+    ----------------------------------------------------------------------------------------------------------------------*/
     function queryLogin($username, $password) {
         $this -> db -> select('username, password');
         $this -> db -> from('users');
@@ -68,6 +52,26 @@ class Users extends MY_Model {
         }
     }
     
+    /*------------------------------------------------------------------------------------------------------------------
+    --      FUNCTION:                       queryUsername
+    --
+    --      DATE:                           March 20th, 2016
+    --
+    --      REVISIONS:                      NONE
+    --
+    --      DESIGNER:                       Jaegar Sarauer
+    --
+    --      PROGRAMMER:                     Jaegar Sarauer
+    --
+    --      INTERFACE:                      boolean queryLogin($username)
+    --                                          string $username = The username to look up in the database.
+    --
+    --      RETURNS:                        boolean = Does the username exist in the database.
+    --
+    --      NOTES:
+    --      This function checks the database for a username and returns true or false if it was found in the database.
+    --      This function is intended to be used to check if registration under that username may happen.
+    ----------------------------------------------------------------------------------------------------------------------*/
     function queryUsername($username) {
         $this->db->select('username');
         $this->db->from('users');
@@ -83,6 +87,27 @@ class Users extends MY_Model {
         }
     }
     
+    
+    /*------------------------------------------------------------------------------------------------------------------
+    --      FUNCTION:                       createAccount
+    --
+    --      DATE:                           March 20th, 2016
+    --
+    --      REVISIONS:                      NONE
+    --
+    --      DESIGNER:                       Jaegar Sarauer
+    --
+    --      PROGRAMMER:                     Jaegar Sarauer
+    --
+    --      INTERFACE:                      void queryLogin($username)
+    --                                          string $username = The username to insert into the database.
+    --                                          string $password = The password to insert into the database.
+    --
+    --      RETURNS:                        void
+    --
+    --      NOTES:
+    --      This function inserts a username and password into the database as one key, indicating a new user.
+    ----------------------------------------------------------------------------------------------------------------------*/
     function createAccount($username, $password) {
         $ins = array('username' => $username, 
             'password' => $password, 

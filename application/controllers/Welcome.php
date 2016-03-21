@@ -4,9 +4,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Welcome extends Application {
 
-	/**
-	 * Index Page for this controller.
-	 */
+        /*------------------------------------------------------------------------------------------------------------------
+        --      FUNCTION:                       index
+        --
+        --      DATE:                           March 20th, 2016
+        --
+        --      REVISIONS:                      NONE
+        --
+        --      DESIGNER:                       Jaegar Sarauer
+        --
+        --      PROGRAMMER:                     Jaegar Sarauer
+        --
+        --      INTERFACE:                      void index()
+        --
+        --      RETURNS:                        void
+        --
+        --      NOTES:
+        --      This function instantiates the view of the web page for the Welcome (homescreen) page. It detects if the user 
+        --      is logged in, if the user isn't they are asked to login or register an account and login to view the rest of the
+        --      website.
+        --      If the user is logged on, the GPS history and map page will be shown to the user for easy navigation.
+        ----------------------------------------------------------------------------------------------------------------------*/
 	public function index()
 	{ 
             $this->data['pageheader'] = '<div class="jumbotron" >

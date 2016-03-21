@@ -12,6 +12,26 @@ class Positions extends MY_Model {
         parent::__construct('positions','username');
     }
     
+    /*------------------------------------------------------------------------------------------------------------------
+    --      FUNCTION:                       getAllPlots
+    --
+    --      DATE:                           March 20th, 2016
+    --
+    --      REVISIONS:                      NONE
+    --
+    --      DESIGNER:                       Jaegar Sarauer
+    --
+    --      PROGRAMMER:                     Jaegar Sarauer
+    --
+    --      INTERFACE:                      void getAllPlots($name)
+    --                                          string $name = The name of the user to find.
+    --
+    --      RETURNS:                        The date, latitude and longitude of all points from the user.
+    --
+    --      NOTES:
+    --      This function querys the database for a username within the GPS data table, and returns an array of all the 
+    --      GPS data found under the username passed into the function.
+    ----------------------------------------------------------------------------------------------------------------------*/
     function getAllPlots($name) {
         $result = $this->some('username', $name);
         $resArray = array();
@@ -21,32 +41,4 @@ class Positions extends MY_Model {
         return $resArray;
     }
     
-    /*function getTransactionByCode($code) {
-        $res = $this->all();
-        $newRes = array();
-        
-        $index = count($res) - 1;
-
-        while($index > 0) {
-            $tmpRes = array();
-                if ($res{$index}->code === $code) {
-                $name = $this->players->getPlayerNamesByUsername($res{$index}->username);
-                array_push($tmpRes, $res{$index}->username, $name[0] . ' ' . $name[1], $res{$index}->amount, $res{$index}->type, $res{$index}->datetime);
-                array_push($newRes, $tmpRes);
-            }
-            $index--;
-        }
-        return $newRes;
-    }
-    
-    function getTransactionByUsername($name) {
-        $res = $this->some('username', $name);
-        $newRes = array();
-        foreach($res as $queryIndex) {
-            $tmpRes = array();
-            array_push($tmpRes, $queryIndex->code, $this->stocks->getStockByCode($queryIndex->code)[0], $queryIndex->amount, $queryIndex->type, $queryIndex->datetime);
-            array_push($newRes, $tmpRes);
-        }
-        return $newRes;
-    }*/
 }
